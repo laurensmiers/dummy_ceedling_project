@@ -1,0 +1,923 @@
+[30;39;22m[0m
+[30;39;22mIgnoring these system tests...[0m
+[30;39;22msystem/test_interactions/out_of_memory.yml[0m
+[30;39;22msystem/test_interactions/unity_64bit_support.yml[0m
+[30;39;22msystem/test_interactions/callingconv.yml[0m
+[30;39;22m./system/test_compilation/out_of_memory.h[0m
+[30;39;22m./system/test_compilation/unity_64bit_support.h[0m
+[30;39;22m./system/test_compilation/callingconv.h[0m
+[30;39;22m[0m
+[30;39;22mRunning system tests...[0m
+[30;39;22mExecuting system tests in test_all_plugins_but_other_limits.c...[0m
+Creating mock for all_plugins_but_other_limits_mockable...
+TRANSFORM!
+NORMALIZED SOURCE:
+#ifndef _ALL_PLUGINS_BUT_OTHER_LIMITS_MOCKABLE_H
+#define _ALL_PLUGINS_BUT_OTHER_LIMITS_MOCKABLE_H
+#include "all_plugins_but_other_limits_types.h"
+#if defined(__GNUC__) && !defined(__ICC)
+#if !defined(__clang__)
+#pragma GCC diagnostic ignored "-Wpragmas"
+#endif
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+#pragma GCC diagnostic ignored "-Wduplicate-decl-specifier"
+#endif
+#include  "CException.h"
+void foo(POINT_T* a);
+POINT_T* bar(void);
+void fooa(POINT_T a[]);
+void foos(const char * a);
+extern const char* bars(void);
+void no_pointers(int a, const char* b);
+int mixed(int a, int* b, int c);
+void no_args(void);
+#endif
+DONE
+[30;39;22mExecuting system tests in test_all_plugins_coexist.c...[0m
+Creating mock for all_plugins_coexist_mockable...
+TRANSFORM!
+NORMALIZED SOURCE:
+#ifndef _ALL_PLUGINS_COEXIST_MOCKABLE_H
+#define _ALL_PLUGINS_COEXIST_MOCKABLE_H
+#include "all_plugins_coexist_types.h"
+#if defined(__GNUC__) && !defined(__ICC)
+#if !defined(__clang__)
+#pragma GCC diagnostic ignored "-Wpragmas"
+#endif
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+#pragma GCC diagnostic ignored "-Wduplicate-decl-specifier"
+#endif
+#include  "CException.h"
+extern void foo(POINT_T* a);
+POINT_T* bar(void);
+void fooa(POINT_T a[]);
+void foos(const char * a);
+const char * bars(void);
+void no_pointers(int a, const char* b);
+int mixed(int a, int* b, int c);
+void no_args(void);
+#endif
+DONE
+[30;39;22mExecuting system tests in test_array_and_pointer_handling.c...[0m
+Creating mock for array_and_pointer_handling_mockable...
+TRANSFORM!
+NORMALIZED SOURCE:
+#ifndef _ARRAY_AND_POINTER_HANDLING_MOCKABLE_H
+#define _ARRAY_AND_POINTER_HANDLING_MOCKABLE_H
+#include "array_and_pointer_handling_types.h"
+#if defined(__GNUC__) && !defined(__ICC)
+#if !defined(__clang__)
+#pragma GCC diagnostic ignored "-Wpragmas"
+#endif
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+#pragma GCC diagnostic ignored "-Wduplicate-decl-specifier"
+#endif
+void foo(POINT_T* a);
+POINT_T* bar(void);
+void fooa(POINT_T a[ARRAY_A_SIZE+1-1]);
+void foos(const char * a);
+const char * bars(void);
+void no_pointers(int a, const char* b);
+int mixed(int a, int* b, int c);
+void potential_packing_problem(short *a);
+void voidpointerfunc(void* a);
+#endif
+DONE
+[30;39;22mExecuting system tests in test_basic_expect_and_return.c...[0m
+Creating mock for basic_expect_and_return_mockable...
+TRANSFORM!
+NORMALIZED SOURCE:
+#ifndef _BASIC_EXPECT_AND_RETURN_MOCKABLE_H
+#define _BASIC_EXPECT_AND_RETURN_MOCKABLE_H
+#include "basic_expect_and_return_types.h"
+#if defined(__GNUC__) && !defined(__ICC)
+#if !defined(__clang__)
+#pragma GCC diagnostic ignored "-Wpragmas"
+#endif
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+#pragma GCC diagnostic ignored "-Wduplicate-decl-specifier"
+#endif
+UINT32 foo(custom_type a);
+UINT32 bar(custom_type b);
+UINT32 foo_varargs(custom_type a, ...);
+const char* foo_char_strings(const char a[], const char* b);
+#endif
+DONE
+[30;39;22mExecuting system tests in test_const_primitives_handling.c...[0m
+Creating mock for const_primitives_handling_mockable...
+TRANSFORM!
+NORMALIZED SOURCE:
+#ifndef _CONST_PRIMITIVES_HANDLING_MOCKABLE_H
+#define _CONST_PRIMITIVES_HANDLING_MOCKABLE_H
+#include "const_primitives_handling_types.h"
+#if defined(__GNUC__) && !defined(__ICC)
+#if !defined(__clang__)
+#pragma GCC diagnostic ignored "-Wpragmas"
+#endif
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+#pragma GCC diagnostic ignored "-Wduplicate-decl-specifier"
+#endif
+void foo(char const*, char* const, const char*);
+void bar(char const* param1, char* const param2, const char* param3);
+#endif
+DONE
+[30;39;22mExecuting system tests in test_doesnt_leave_details_behind.c...[0m
+Creating mock for doesnt_leave_details_behind_mockable...
+TRANSFORM!
+NORMALIZED SOURCE:
+#ifndef _DOESNT_LEAVE_DETAILS_BEHIND_MOCKABLE_H
+#define _DOESNT_LEAVE_DETAILS_BEHIND_MOCKABLE_H
+#include "doesnt_leave_details_behind_types.h"
+#if defined(__GNUC__) && !defined(__ICC)
+#if !defined(__clang__)
+#pragma GCC diagnostic ignored "-Wpragmas"
+#endif
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+#pragma GCC diagnostic ignored "-Wduplicate-decl-specifier"
+#endif
+#include  "CException.h"
+extern void foo(POINT_T* a);
+POINT_T* bar(void);
+void no_args(void);
+#endif
+DONE
+[30;39;22mExecuting system tests in test_enforce_strict_ordering.c...[0m
+Creating mock for enforce_strict_ordering_mockable...
+TRANSFORM!
+NORMALIZED SOURCE:
+#ifndef _ENFORCE_STRICT_ORDERING_MOCKABLE_H
+#define _ENFORCE_STRICT_ORDERING_MOCKABLE_H
+#include "enforce_strict_ordering_types.h"
+#if defined(__GNUC__) && !defined(__ICC)
+#if !defined(__clang__)
+#pragma GCC diagnostic ignored "-Wpragmas"
+#endif
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+#pragma GCC diagnostic ignored "-Wduplicate-decl-specifier"
+#endif
+#include  "CException.h"
+UINT32 foo(custom_type a);
+UINT32 bar(custom_type b);
+void baz(custom_type c);
+#endif
+DONE
+[30;39;22mExecuting system tests in test_expect_and_return_custom_types.c...[0m
+Creating mock for expect_and_return_custom_types_mockable...
+TRANSFORM!
+NORMALIZED SOURCE:
+#ifndef _EXPECT_AND_RETURN_CUSTOM_TYPES_MOCKABLE_H
+#define _EXPECT_AND_RETURN_CUSTOM_TYPES_MOCKABLE_H
+#include "expect_and_return_custom_types_types.h"
+#if defined(__GNUC__) && !defined(__ICC)
+#if !defined(__clang__)
+#pragma GCC diagnostic ignored "-Wpragmas"
+#endif
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+#pragma GCC diagnostic ignored "-Wduplicate-decl-specifier"
+#endif
+EXAMPLE_STRUCT_T foo(EXAMPLE_STRUCT_T a);
+#endif
+DONE
+[30;39;22mExecuting system tests in test_expect_and_return_treat_as.c...[0m
+Creating mock for expect_and_return_treat_as_mockable...
+TRANSFORM!
+NORMALIZED SOURCE:
+#ifndef _EXPECT_AND_RETURN_TREAT_AS_MOCKABLE_H
+#define _EXPECT_AND_RETURN_TREAT_AS_MOCKABLE_H
+#include "expect_and_return_treat_as_types.h"
+#if defined(__GNUC__) && !defined(__ICC)
+#if !defined(__clang__)
+#pragma GCC diagnostic ignored "-Wpragmas"
+#endif
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+#pragma GCC diagnostic ignored "-Wduplicate-decl-specifier"
+#endif
+MY_INT foo(MY_HEX a);
+MY_INT bar(MY_HEX b);
+MY_STRING foo_char_strings(MY_STRING a, MY_STRING b);
+float float_adder(float a, float b);
+MY_INT* pointer_foo(MY_HEX* a);
+void pointer_bar(PTR_INT a);
+#endif
+DONE
+[30;39;22mExecuting system tests in test_expect_and_throw.c...[0m
+Creating mock for expect_and_throw_mockable...
+TRANSFORM!
+NORMALIZED SOURCE:
+#ifndef _EXPECT_AND_THROW_MOCKABLE_H
+#define _EXPECT_AND_THROW_MOCKABLE_H
+#include "expect_and_throw_types.h"
+#if defined(__GNUC__) && !defined(__ICC)
+#if !defined(__clang__)
+#pragma GCC diagnostic ignored "-Wpragmas"
+#endif
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+#pragma GCC diagnostic ignored "-Wduplicate-decl-specifier"
+#endif
+#include "CException.h"
+UINT32 foo(custom_type a);
+UINT32 bar(custom_type b);
+UINT32 foo_varargs(custom_type a, ...);
+#endif
+DONE
+[30;39;22mExecuting system tests in test_expect_any_args.c...[0m
+Creating mock for expect_any_args_mockable...
+TRANSFORM!
+NORMALIZED SOURCE:
+#ifndef _EXPECT_ANY_ARGS_MOCKABLE_H
+#define _EXPECT_ANY_ARGS_MOCKABLE_H
+#include "expect_any_args_types.h"
+#if defined(__GNUC__) && !defined(__ICC)
+#if !defined(__clang__)
+#pragma GCC diagnostic ignored "-Wpragmas"
+#endif
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+#pragma GCC diagnostic ignored "-Wduplicate-decl-specifier"
+#endif
+int foo(int a);
+void bar(int b);
+#endif
+DONE
+[30;39;22mExecuting system tests in test_fancy_pointer_handling.c...[0m
+Creating mock for fancy_pointer_handling_mockable...
+TRANSFORM!
+NORMALIZED SOURCE:
+#ifndef _FANCY_POINTER_HANDLING_MOCKABLE_H
+#define _FANCY_POINTER_HANDLING_MOCKABLE_H
+#include "fancy_pointer_handling_types.h"
+#if defined(__GNUC__) && !defined(__ICC)
+#if !defined(__clang__)
+#pragma GCC diagnostic ignored "-Wpragmas"
+#endif
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+#pragma GCC diagnostic ignored "-Wduplicate-decl-specifier"
+#endif
+void foo(POINT_T* a);
+POINT_T* bar(void);
+void fooa(POINT_T a[]);
+void foos(const char *a);
+const char* bars(void);
+INT_PTR zoink(INT_PTR a);
+#endif
+DONE
+[30;39;22mExecuting system tests in test_function_pointer_handling.c...[0m
+Creating mock for function_pointer_handling_mockable...
+TRANSFORM!
+NORMALIZED SOURCE:
+#ifndef _FUNCTION_POINTER_HANDLING_MOCKABLE_H
+#define _FUNCTION_POINTER_HANDLING_MOCKABLE_H
+#include "function_pointer_handling_types.h"
+#if defined(__GNUC__) && !defined(__ICC)
+#if !defined(__clang__)
+#pragma GCC diagnostic ignored "-Wpragmas"
+#endif
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+#pragma GCC diagnostic ignored "-Wduplicate-decl-specifier"
+#endif
+void takes_function_type( FUNCTION_T myfunc );
+void takes_function_ptr( unsigned int (*func_ptr)(int, char) );
+void takes_const_function_ptr( unsigned int (* const)(int, char) );
+unsigned short (*returns_function_ptr( const char op_code ))( int, long int );
+#endif
+DONE
+[30;39;22mExecuting system tests in test_ignore_and_return.c...[0m
+Creating mock for ignore_and_return_mockable...
+TRANSFORM!
+NORMALIZED SOURCE:
+#ifndef _IGNORE_AND_RETURN_MOCKABLE_H
+#define _IGNORE_AND_RETURN_MOCKABLE_H
+#include "ignore_and_return_types.h"
+#if defined(__GNUC__) && !defined(__ICC)
+#if !defined(__clang__)
+#pragma GCC diagnostic ignored "-Wpragmas"
+#endif
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+#pragma GCC diagnostic ignored "-Wduplicate-decl-specifier"
+#endif
+int foo(int a);
+void bar(int b);
+#endif
+DONE
+[30;39;22mExecuting system tests in test_ignore_strict_mock_calling.c...[0m
+Creating mock for ignore_strict_mock_calling_mockable...
+TRANSFORM!
+NORMALIZED SOURCE:
+#ifndef _IGNORE_STRICT_MOCK_CALLING_MOCKABLE_H
+#define _IGNORE_STRICT_MOCK_CALLING_MOCKABLE_H
+#include "ignore_strict_mock_calling_types.h"
+#if defined(__GNUC__) && !defined(__ICC)
+#if !defined(__clang__)
+#pragma GCC diagnostic ignored "-Wpragmas"
+#endif
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+#pragma GCC diagnostic ignored "-Wduplicate-decl-specifier"
+#endif
+int foo(int a);
+void bar(int b);
+#endif
+DONE
+[30;39;22mExecuting system tests in test_newer_standards_stuff1.c...[0m
+Creating mock for newer_standards_stuff1_mockable...
+TRANSFORM!
+NORMALIZED SOURCE:
+#ifndef _NEWER_STANDARDS_STUFF1_MOCKABLE_H
+#define _NEWER_STANDARDS_STUFF1_MOCKABLE_H
+#include "newer_standards_stuff1_types.h"
+#if defined(__GNUC__) && !defined(__ICC)
+#if !defined(__clang__)
+#pragma GCC diagnostic ignored "-Wpragmas"
+#endif
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+#pragma GCC diagnostic ignored "-Wduplicate-decl-specifier"
+#endif
+int32_t foo(int32_t a);
+#endif
+DONE
+[30;39;22mExecuting system tests in test_nonstandard_parsed_stuff_1.c...[0m
+Creating mock for nonstandard_parsed_stuff_1_mockable...
+TRANSFORM!
+NORMALIZED SOURCE:
+#ifndef _NONSTANDARD_PARSED_STUFF_1_MOCKABLE_H
+#define _NONSTANDARD_PARSED_STUFF_1_MOCKABLE_H
+#include "nonstandard_parsed_stuff_1_types.h"
+#if defined(__GNUC__) && !defined(__ICC)
+#if !defined(__clang__)
+#pragma GCC diagnostic ignored "-Wpragmas"
+#endif
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+#pragma GCC diagnostic ignored "-Wduplicate-decl-specifier"
+#endif
+#include  "CException.h"
+void foos(const char const * a);
+const char const * bars(void);
+#endif
+DONE
+[30;39;22mExecuting system tests in test_nonstandard_parsed_stuff_2.c...[0m
+Creating mock for nonstandard_parsed_stuff_2_mockable...
+TRANSFORM!
+NORMALIZED SOURCE:
+#ifndef _NONSTANDARD_PARSED_STUFF_2_MOCKABLE_H
+#define _NONSTANDARD_PARSED_STUFF_2_MOCKABLE_H
+#include "nonstandard_parsed_stuff_2_types.h"
+#if defined(__GNUC__) && !defined(__ICC)
+#if !defined(__clang__)
+#pragma GCC diagnostic ignored "-Wpragmas"
+#endif
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+#pragma GCC diagnostic ignored "-Wduplicate-decl-specifier"
+#endif
+void foo(unsigned char** a);
+unsigned char** bar(void);
+#endif
+DONE
+[30;39;22mExecuting system tests in test_parsing_challenges.c...[0m
+Creating mock for parsing_challenges_mockable...
+TRANSFORM!
+NORMALIZED SOURCE:
+#ifndef _PARSING_CHALLENGES_MOCKABLE_H
+#define _PARSING_CHALLENGES_MOCKABLE_H
+#include "parsing_challenges_types.h"
+#if defined(__GNUC__) && !defined(__ICC)
+#if !defined(__clang__)
+#pragma GCC diagnostic ignored "-Wpragmas"
+#endif
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+#pragma GCC diagnostic ignored "-Wduplicate-decl-specifier"
+#endif
+#ifdef __cplusplus
+extern "C" {
+#endif
+#define SHOULD_IGNORE_NEXT_FUNC_DEF_AS_PART_OF_MACRO void IgnoredFunction(NotAValidType ToMakeItFailIfWeActuallyMockedThis);
+typedef void VOID_TYPE_CRAZINESS_LCL;
+VOID_TYPE_CRAZINESS_LCL void_type_craziness1(int * a, int *b, int* c);
+void void_type_craziness2(VOID_TYPE_CRAZINESS_CFG);
+void void_type_craziness3(VOID_TYPE_CRAZINESS_CFG* a);
+U16  *ptr_return1(int a);
+U16*  ptr_return2(int a);
+U16 * ptr_return3(int a);
+unsigned int** ptr_ptr_return1(unsigned int** a);
+unsigned int* *ptr_ptr_return2(unsigned int* *a);
+unsigned int **ptr_ptr_return3(unsigned int **a);
+unsigned int ** ptr_ptr_return4(unsigned int ** a);
+void var_args1(int a, ...);
+void var_args2(int a, int b, ...);
+char
+crazy_multiline(
+  int a,
+  unsigned int b);
+unsigned long int incredible_descriptors(register const unsigned short a);
+TypeDefInt uses_typedef_like_names(TypeDefInt typedefvar);
+void oh_brackets1(int fudge[5]);
+void oh_brackets2(int caramel[]);
+void oh_brackets3(int toffee[(32)]);
+void oh_brackets4(int taffy[ (64) ]);
+#ifdef __cplusplus
+}
+#endif
+#endif
+DONE
+[30;39;22mExecuting system tests in test_return_thru_ptr_and_expect_any_args.c...[0m
+Creating mock for return_thru_ptr_and_expect_any_args_mockable...
+TRANSFORM!
+NORMALIZED SOURCE:
+#ifndef _RETURN_THRU_PTR_AND_EXPECT_ANY_ARGS_MOCKABLE_H
+#define _RETURN_THRU_PTR_AND_EXPECT_ANY_ARGS_MOCKABLE_H
+#include "return_thru_ptr_and_expect_any_args_types.h"
+#if defined(__GNUC__) && !defined(__ICC)
+#if !defined(__clang__)
+#pragma GCC diagnostic ignored "-Wpragmas"
+#endif
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+#pragma GCC diagnostic ignored "-Wduplicate-decl-specifier"
+#endif
+void ptr_ret_int(int *r);
+void ptr_ret_ints(int *r, int *s);
+void ptr_ret_array(char r[], int len);
+void ptr_ret_typedef(intptr r);
+void ptr_ret_struct(struct a_struct *r);
+void ptr_ret_abstract(abs_struct *r);
+void ptr_ret_abstract_array(abs_struct *r, int len);
+void ptr_ret_const_int(int *r, const int *s);
+void ptr_ret_string(char *s);
+#endif
+DONE
+[30;39;22mExecuting system tests in test_return_thru_ptr_ignore_arg.c...[0m
+Creating mock for return_thru_ptr_ignore_arg_mockable...
+TRANSFORM!
+NORMALIZED SOURCE:
+#ifndef _RETURN_THRU_PTR_IGNORE_ARG_MOCKABLE_H
+#define _RETURN_THRU_PTR_IGNORE_ARG_MOCKABLE_H
+#include "return_thru_ptr_ignore_arg_types.h"
+#if defined(__GNUC__) && !defined(__ICC)
+#if !defined(__clang__)
+#pragma GCC diagnostic ignored "-Wpragmas"
+#endif
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+#pragma GCC diagnostic ignored "-Wduplicate-decl-specifier"
+#endif
+void ptr_ret_int(int *r);
+void ptr_ret_ints(int *r, int *s);
+void ptr_ret_array(char r[], int len);
+void ptr_ret_typedef(intptr r);
+void ptr_ret_struct(struct a_struct *r);
+void ptr_ret_abstract(abs_struct *r);
+void ptr_ret_abstract_array(abs_struct *r, int len);
+void ptr_ret_const_int(int *r, const int *s);
+void ptr_ret_string(char *s);
+#endif
+DONE
+[30;39;22mExecuting system tests in test_struct_union_enum_expect_and_return.c...[0m
+Creating mock for struct_union_enum_expect_and_return_mockable...
+TRANSFORM!
+NORMALIZED SOURCE:
+#ifndef _STRUCT_UNION_ENUM_EXPECT_AND_RETURN_MOCKABLE_H
+#define _STRUCT_UNION_ENUM_EXPECT_AND_RETURN_MOCKABLE_H
+#include "struct_union_enum_expect_and_return_types.h"
+#if defined(__GNUC__) && !defined(__ICC)
+#if !defined(__clang__)
+#pragma GCC diagnostic ignored "-Wpragmas"
+#endif
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+#pragma GCC diagnostic ignored "-Wduplicate-decl-specifier"
+#endif
+void foo_struct(struct THING*, struct THING);
+struct THING foobar_struct(void);
+void foo_union(union STARS_AND_STRIPES*, union STARS_AND_STRIPES);
+union STARS_AND_STRIPES foobar_union(void);
+void foo_enum(enum HOKEY_POKEY a, enum HOKEY_POKEY * b);
+enum HOKEY_POKEY foobar_enum(void);
+#endif
+DONE
+[30;39;22mExecuting system tests in test_struct_union_enum_expect_and_return_with_plugins.c...[0m
+Creating mock for struct_union_enum_expect_and_return_with_plugins_mockable...
+TRANSFORM!
+NORMALIZED SOURCE:
+#ifndef _STRUCT_UNION_ENUM_EXPECT_AND_RETURN_WITH_PLUGINS_MOCKABLE_H
+#define _STRUCT_UNION_ENUM_EXPECT_AND_RETURN_WITH_PLUGINS_MOCKABLE_H
+#include "struct_union_enum_expect_and_return_with_plugins_types.h"
+#if defined(__GNUC__) && !defined(__ICC)
+#if !defined(__clang__)
+#pragma GCC diagnostic ignored "-Wpragmas"
+#endif
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+#pragma GCC diagnostic ignored "-Wduplicate-decl-specifier"
+#endif
+void foo_struct(struct THING*, struct THING);
+struct THING foobar_struct(void);
+void foo_union(union STARS_AND_STRIPES*, union STARS_AND_STRIPES);
+union STARS_AND_STRIPES foobar_union(void);
+void foo_enum(enum HOKEY_POKEY a, enum HOKEY_POKEY * b);
+enum HOKEY_POKEY foobar_enum(void);
+#endif
+DONE
+[30;39;22mExecuting system tests in test_stubs_with_callbacks.c...[0m
+Creating mock for stubs_with_callbacks_mockable...
+TRANSFORM!
+NORMALIZED SOURCE:
+#ifndef _STUBS_WITH_CALLBACKS_MOCKABLE_H
+#define _STUBS_WITH_CALLBACKS_MOCKABLE_H
+#include "stubs_with_callbacks_types.h"
+#if defined(__GNUC__) && !defined(__ICC)
+#if !defined(__clang__)
+#pragma GCC diagnostic ignored "-Wpragmas"
+#endif
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+#pragma GCC diagnostic ignored "-Wduplicate-decl-specifier"
+#endif
+UINT32 foo(custom_type* a);
+UINT32 bar(custom_type* b);
+int    baz(void);
+void   fuz(int* args, int num);
+#endif
+DONE
+[30;39;22mExecuting system tests in test_unity_ignores.c...[0m
+Creating mock for unity_ignores_mockable...
+TRANSFORM!
+NORMALIZED SOURCE:
+#ifndef _UNITY_IGNORES_MOCKABLE_H
+#define _UNITY_IGNORES_MOCKABLE_H
+#include "unity_ignores_types.h"
+#if defined(__GNUC__) && !defined(__ICC)
+#if !defined(__clang__)
+#pragma GCC diagnostic ignored "-Wpragmas"
+#endif
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+#pragma GCC diagnostic ignored "-Wduplicate-decl-specifier"
+#endif
+UINT32 foo(UINT32 a);
+void bar(void);
+#endif
+DONE
+[30;39;22m[0m
+[30;39;22m------------------------------------[0m
+[30;39;22mSYSTEM TEST MOCK INTERACTION SUMMARY[0m
+[30;39;22m------------------------------------[0m
+[30;32;22m286 Tests 0 Failures 0 Ignored[0m
+[30;39;22m[0m
+[30;39;22m[0m
+[30;39;22m------------------------------------[0m
+[30;39;22mSYSTEM TEST MOCK COMPILATION SUMMARY[0m
+[30;39;22m------------------------------------[0m
+Creating mock for const...
+TRANSFORM!
+NORMALIZED SOURCE:
+
+#if defined(__GNUC__) && !defined(__ICC)
+#if !defined(__clang__)
+#pragma GCC diagnostic ignored "-Wpragmas"
+#endif
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+#pragma GCC diagnostic ignored "-Wduplicate-decl-specifier"
+#endif
+struct _DUMMY_T { unsigned int a; float b; };
+void const_variants1( const char* a, int const, unsigned short const * c );
+void const_variants2(
+	struct _DUMMY_T const * const param1,
+	const unsigned long int const * const param2,
+	const struct _DUMMY_T const * param3 );
+const int * const_retval1(void);
+int const * const_retval2(void);
+const int* const_retval5(void);
+int const* const_retval6(void);
+const int *const_retval9(void);
+int const *const_retvalA(void);
+DONE
+[30;37;22mCompiling mock_const.c...[0m
+Creating mock for inline...
+TRANSFORM!
+
+Matched:
+'static inline void dummy_inline_func_0(void) {
+	
+}
+
+inline static void dummy_inline_func_1(void) {
+	
+}
+
+void inline static dummy_inline_func_2(void) {
+	
+}
+
+void dummy_normal_func(int a);
+
+inline void dummy_inline_func_3(void) {
+	
+}'DONE
+MATCH:
+'static inline void dummy_inline_func_0(void) {
+	
+}
+
+inline static void dummy_inline_func_1(void) {
+	
+}
+
+void inline static dummy_inline_func_2(void) {
+	
+}
+
+void dummy_normal_func(int a);
+
+inline void dummy_inline_func_3(void) {
+	
+}'DONE
+'DONE
+'[["static"]]'DONE
+'DONE
+'static inline void dummy_inline_func_0(void) {
+	
+}
+
+inline static void dummy_inline_func_1(void) {
+	
+}
+
+void inline static dummy_inline_func_2(void) {
+	
+}
+
+void dummy_normal_func(int a);
+
+inline void dummy_inline_func_3(void) {
+	
+}'DONE
+NORMALIZED SOURCE:
+
+DONE
+[30;37;22mCompiling mock_inline.c...[0m
+Creating mock for osek...
+TRANSFORM!
+NORMALIZED SOURCE:
+
+typedef unsigned char OSServiceIdType;
+typedef void (*OSEKOS_VOIDFUNCPTR)(void);
+typedef unsigned char StatusType;
+typedef unsigned char OSEK_U8;
+typedef unsigned short OSEK_U16;
+typedef unsigned long OSEK_U32;
+void OSEKOSDisableAll(void);
+void OSEKOSEnableAll(void);
+typedef unsigned long * OSEKOSSaveType;
+typedef void OSEK_TASK;
+typedef OSEK_U8 OSEKOSPrioType;
+enum {
+Task_DbgCAN
+,
+Task_ALS
+,
+CalibrateMagTask
+,
+Task_IAQ
+,
+SmartBeam
+,
+Task_QbertTestImage
+,
+Task_TestQbertMem
+,
+Task_Cyclic1000
+,
+ProcessMagForCompass
+,
+ReadMag
+,
+Task_Cyclic10
+,
+Task_Wdm
+,
+BackgroundTask
+,
+Task_Cyclic20
+,
+Task_Cyclic2
+};
+OSEK_TASK OSEKOS_T_Task_DbgCAN(void);
+OSEK_TASK OSEKOS_T_Task_ALS(void);
+OSEK_TASK OSEKOS_T_CalibrateMagTask(void);
+OSEK_TASK OSEKOS_T_Task_IAQ(void);
+OSEK_TASK OSEKOS_T_SmartBeam(void);
+OSEK_TASK OSEKOS_T_Task_QbertTestImage(void);
+OSEK_TASK OSEKOS_T_Task_TestQbertMem(void);
+OSEK_TASK OSEKOS_T_Task_Cyclic1000(void);
+OSEK_TASK OSEKOS_T_ProcessMagForCompass(void);
+OSEK_TASK OSEKOS_T_ReadMag(void);
+OSEK_TASK OSEKOS_T_Task_Cyclic10(void);
+OSEK_TASK OSEKOS_T_Task_Wdm(void);
+OSEK_TASK OSEKOS_T_BackgroundTask(void);
+OSEK_TASK OSEKOS_T_Task_Cyclic20(void);
+OSEK_TASK OSEKOS_T_Task_Cyclic2(void);
+OSEK_TASK OSEKOS_Twrap_Task_DbgCAN(void);
+OSEK_TASK OSEKOS_Twrap_Task_ALS(void);
+OSEK_TASK OSEKOS_Twrap_CalibrateMagTask(void);
+OSEK_TASK OSEKOS_Twrap_Task_IAQ(void);
+OSEK_TASK OSEKOS_Twrap_SmartBeam(void);
+OSEK_TASK OSEKOS_Twrap_Task_QbertTestImage(void);
+OSEK_TASK OSEKOS_Twrap_Task_TestQbertMem(void);
+OSEK_TASK OSEKOS_Twrap_Task_Cyclic1000(void);
+OSEK_TASK OSEKOS_Twrap_ProcessMagForCompass(void);
+OSEK_TASK OSEKOS_Twrap_ReadMag(void);
+OSEK_TASK OSEKOS_Twrap_Task_Cyclic10(void);
+OSEK_TASK OSEKOS_Twrap_Task_Wdm(void);
+OSEK_TASK OSEKOS_Twrap_BackgroundTask(void);
+OSEK_TASK OSEKOS_Twrap_Task_Cyclic20(void);
+OSEK_TASK OSEKOS_Twrap_Task_Cyclic2(void);
+typedef OSEK_U8 TaskType;
+typedef OSEK_U8 TaskStateType;
+typedef OSEK_U16 EventMaskType;
+typedef OSEK_U8 ResourceType;
+void OSEKOSEnableSystemTimers(void);
+typedef OSEK_U8 CounterType;
+typedef OSEK_U32 TickType;
+typedef OSEK_U8 AlarmType;
+void OSEKOS_ISR_CanTxInterrupt(void);
+void OSEKOS_ISR_CanRxInterrupt(void);
+void OSEKOS_ISR_CanErrInterrupt(void);
+void OSEKOS_ISR_SCIRxInterrupt(void);
+void OSEKOS_ISR_SCITxInterrupt(void);
+void OSEKOS_ISR_UP_DMA_Interrupt_0(void);
+void OSEKOS_ISR_UP_DMA_Interrupt_1(void);
+void OSEKOS_ISR_UP_DMA_Interrupt_2(void);
+void OSEKOS_ISR_UP_DMA_Interrupt_3(void);
+void OSEKOS_ISR_CompFreqHandler(void);
+void OSEKOS_ISR_AmbientReturnInt(void);
+void OSEKOS_ISR_GlareReturnInt(void);
+void OSEKOS_ISR_ALSTimeoutInt(void);
+void OSEKOS_ISR_LINTimerInt(void);
+void OSEKOS_ISR_LINDelayInt(void);
+void OSEKOS_ISR_TimerMExpire(void);
+void OSEKOS_ISR_LINRxTx_SCI1(void);
+void OSEKOS_ISR_CanRxInterrupt_1(void);
+void OSEKOS_ISR_LINError_SCI1(void);
+void OSEKOS_ISR_SysCounter(void);
+extern void OSEKOS_ISR_CanTxInterrupt( void );
+extern void OSEKOS_ISR_CanRxInterrupt( void );
+unsigned long OSEKOSrtcGetSeconds ( void );
+void OSEKOSrtcIncrement ( unsigned long nsec );
+enum
+{
+   E_OS_ACCESS = 1,
+   E_OS_CALLEVEL = 2,
+   E_OS_ID = 3,
+   E_OS_LIMIT = 4,
+   E_OS_NOFUNC = 5,
+   E_OS_RESOURCE = 6,
+   E_OS_STATE = 7,
+   E_OS_VALUE = 8,
+   E_OS_SYS_StackOverflow = 20,
+   E_OS_SYS_StackUnderflow = 21,
+   E_OS_SYS_INIT = 22,
+   E_OS_SYS_CONFIG = 23,
+   E_OS_SYS_CODE = 24,
+   E_OS_SYS_TOOL = 25,
+   E_OS_SYS_TimerRange = 26
+};
+enum
+{
+   SUSPENDED = 0x00,
+   READY = 0x01,
+   RUNNING = 0x02,
+   WAITING = 0x03,
+   INTSTART = 0x08,
+   SETSTART = 0x10,
+   NPRTASK = 0x20,
+   USEFP = 0x40
+};
+typedef struct
+{
+   TickType maxallowedvalue;
+   TickType ticksperbase;
+} AlarmBaseType;
+typedef TaskType *TaskRefType;
+typedef TaskStateType *TaskStateRefType;
+typedef EventMaskType *EventMaskRefType;
+typedef TickType *TickRefType;
+typedef AlarmBaseType *AlarmBaseRefType;
+typedef OSEK_U8 AppModeType;
+typedef OSEK_U8 OSEKOSTaskActCntType;
+TaskType OSEKOStidact;
+OSEKOSPrioType OSEKOSrunprio;
+StatusType OSEKOSError ( register StatusType );
+void ErrorHook ( StatusType );
+void StartupHook ( void );
+void ShutdownHook ( StatusType );
+int getUsedTaskStack ( TaskType );
+int getUnusedTaskStack ( TaskType );
+int getUsedIsrStack ( void );
+int getUnusedIsrStack ( void );
+void OSEKOStaskStackCheckInit ( void );
+signed char OSEKOStaskStackCheck ( OSEK_U8 * );
+signed char OSEKOSisrStackCheck ( OSEK_U8 * );
+void OSEKOStaskStackCheckFatal ( OSEK_U8 * );
+void OSEKOSisrStackCheckFatal ( OSEK_U8 * );
+OSEK_U8 * OSEKOSgetStackPointer ( void );
+void OSEKOSTaskSwitch ( void );
+StatusType OSEKOSReturn ( StatusType );
+StatusType OSEKOSActivateTask ( register TaskType );
+void OSEKOSTerminateTask ( TaskType, TaskType );
+   extern void OSEKOSGetResource ( ResourceType );
+   extern void OSEKOSReleaseResource ( ResourceType );
+int OSEKOSSetEvent ( TaskType, EventMaskType );
+int OSEKOSWaitEvent ( EventMaskType );
+TickType OSEKOSGetAlarm(register AlarmType);
+void OSEKOSSetAlarm ( AlarmType, TickType, TickType );
+StatusType OSEKOSSetAbsAlarm ( AlarmType a, TickType b, TickType c );
+StatusType OSEKOSCancelAlarm ( register AlarmType );
+void OSEKOSAdvCntr ( void );
+AppModeType GetActiveApplicationMode ( void );
+void StartOS ( AppModeType );
+void OSEKOSShutdownOS ( StatusType );
+StatusType ActivateTask ( TaskType A );
+StatusType TerminateTask ( void );
+StatusType ChainTask ( TaskType A );
+StatusType GetTaskState ( TaskType A, TaskStateRefType B );
+StatusType GetTaskID ( TaskRefType A );
+StatusType Schedule ( void );
+StatusType GetResource ( ResourceType A );
+StatusType ReleaseResource ( ResourceType A );
+StatusType SetEvent ( TaskType A, EventMaskType B );
+StatusType ClearEvent ( EventMaskType A );
+StatusType WaitEvent ( EventMaskType A );
+StatusType GetEvent ( TaskType A, EventMaskRefType B );
+StatusType GetAlarm ( AlarmType A, TickRefType B );
+StatusType GetAlarmBase ( AlarmType A, AlarmBaseRefType B );
+StatusType SetRelAlarm ( AlarmType A, TickType B, TickType C );
+StatusType SetAbsAlarm ( AlarmType A, TickType B, TickType C );
+StatusType CancelAlarm ( AlarmType A );
+StatusType AdvCntr ( CounterType A );
+StatusType IAdvCntr ( CounterType A );
+void SuspendOSInterrupts ( void );
+void ResumeOSInterrupts ( void );
+void SuspendAllInterrupts ( void );
+void ResumeAllInterrupts ( void );
+void DisableAllInterrupts ( void );
+void EnableAllInterrupts ( void );
+void OSEKOSDisable(void);
+void OSEKOSEnable(void);
+void OSEKOSAsmIDispatch(unsigned long *);
+void OSEKOSAsmDispatch(OSEKOSPrioType p);
+void OSEKOSStartupEnable(void);
+void OSEKOSNop(void);
+unsigned int OSEKOSV850CheckIsrSwitch(void);
+void OSEKOSV850InitInterrupts(void);
+void OSEKOSV850SetupInterrupts();
+void OSEKOSV850SyncContextLoad(OSEKOSSaveType);
+void OSEKOSV850SyncContextLoadFromIRQ(OSEKOSSaveType);
+void OSEKOSV850ASyncContextLoad(OSEKOSSaveType);
+void OSEKOSV850ASyncContextLoadFromIRQ(OSEKOSSaveType);
+void ( ( * const OSEKOStaskStartAddress [10] ) ( void ) );
+StatusType (* OSEKOStaskStatuses [10][5]) ( void );
+void OSEKOSV850StartContext
+(
+    OSEK_TASK (( * const ) ( void )),
+    OSEK_U8 * const
+);
+void OSEKOSV850StartContextFromIRQ
+(
+    OSEK_TASK (( * const ) ( void )),
+    OSEK_U8 * const
+);
+void OSEKOSSuspendOSInterrupts(void);
+void OSEKOSResumeOSInterrupts(void);
+void OSEKOSSuspendAllInterrupts(void);
+void OSEKOSResumeAllInterrupts(void);
+void OSEKOScheckSuspendResumeNesting(void);
+void OSEKOSgetSR(void);
+void OSEKOSEnableInterrupt_intern(int nr);
+void OSEKOSDisableInterrupt_intern(int nr);
+DONE
+[30;37;22mCompiling mock_osek.c...[0m
+Creating mock for parsing...
+TRANSFORM!
+NORMALIZED SOURCE:
+
+typedef unsigned short U16;
+typedef signed int int32_t;
+typedef struct _POINT_T
+{
+  int x;
+  int y;
+} POINT_T;
+typedef void VOID_TYPE_CRAZINESS;
+void var_args1(int a, ...);
+void var_args2(int a, int b, ...);
+VOID_TYPE_CRAZINESS void_type_craziness1(int, float, double, char, short, long, long int, long long, void*);
+int void_type_craziness2( VOID_TYPE_CRAZINESS );
+   void  crazy_whitespace  (   int    lint, double shot  ,  short  stack )  ;
+char
+ crazy_multiline
+(
+  int a,
+  unsigned int b);
+U16  *ptr_return1(int a);
+U16*  ptr_return2(int a);
+U16 * ptr_return3(int a);
+unsigned int** ptr_ptr_return1(unsigned int** a);
+unsigned int* *ptr_ptr_return2(unsigned int* *a);
+unsigned int **ptr_ptr_return3(unsigned int **a);
+unsigned int ** ptr_ptr_return4(unsigned int ** a);
+extern unsigned long int incredible_descriptors(register const unsigned short a);
+int32_t example_c99_type(int32_t param1);
+void I2CIntRegister(uint32_t ui32Base, void (*pfnHandler)(void));
+DONE
+[30;37;22mCompiling mock_parsing.c...[0m

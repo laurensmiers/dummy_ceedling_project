@@ -6,7 +6,7 @@
 
 class CMockHeaderParser
 
-  attr_accessor :funcs, :c_attr_noconst, :c_attributes, :treat_as_void, :treat_externs
+  attr_accessor :funcs, :c_attr_noconst, :c_attributes, :treat_as_void, :treat_externs, :treat_inlines, :inline_function_patterns
 
   def initialize(cfg)
     @funcs = []
@@ -14,20 +14,27 @@ class CMockHeaderParser
     @c_attr_noconst = cfg.attributes.uniq - ['const']
     @c_attributes = ['const'] + c_attr_noconst
     @c_calling_conventions = cfg.c_calling_conventions.uniq
+    @treat_as_array = cfg.treat_as_array
     @treat_as_void = (['void'] + cfg.treat_as_void).uniq
-    @declaration_parse_matcher = /([\d\w\s\*\(\),\[\]]+??)\(([\d\w\s\*\(\),\.\[\]+-]*)\)$/m
+    @declaration_parse_matcher = /([\w\s\*\(\),\[\]]+??)\(([\w\s\*\(\),\.\[\]+-]*)\)$/m
     @standards = (['int','short','char','long','unsigned','signed'] + cfg.treat_as.keys).uniq
+    @array_size_name = cfg.array_size_name
+    @array_size_type = (['int', 'size_t'] + cfg.array_size_type).uniq
     @when_no_prototypes = cfg.when_no_prototypes
     @local_as_void = @treat_as_void
     @verbosity = cfg.verbosity
     @treat_externs = cfg.treat_externs
+    @treat_inlines = cfg.treat_inlines
+    @inline_function_patterns = cfg.inline_function_patterns
     @c_strippables += ['extern'] if (@treat_externs == :include) #we'll need to remove the attribute if we're allowing externs
+    @c_strippables += ['inline'] if (@treat_inlines == :include) #we'll need to remove the attribute if we're allowing inlines
   end
 
   def parse(name, source)
     @module_name = name.gsub(/\W/,'')
     @typedefs = []
     @funcs = []
+    @normalized_source = nil
     function_names = []
 
     parse_functions( import_source(source) ).map do |decl|
@@ -38,13 +45,109 @@ class CMockHeaderParser
       end
     end
 
+    @normalized_source = if (@treat_inlines == :include)
+                           transform_inline_functions(source)
+                         else
+                           ''
+                         end
+
     { :includes  => nil,
       :functions => @funcs,
-      :typedefs  => @typedefs
+      :typedefs  => @typedefs,
+      :normalized_source    => @normalized_source
     }
   end
 
   private if $ThisIsOnlyATest.nil? ################
+
+  def remove_nested_pairs_of_braces(source)
+    # remove nested pairs of braces because no function declarations will be inside of them (leave outer pair for function definition detection)
+    if (RUBY_VERSION.split('.')[0].to_i > 1)
+      #we assign a string first because (no joke) if Ruby 1.9.3 sees this line as a regex, it will crash.
+      r = "\\{([^\\{\\}]*|\\g<0>)*\\}"
+      source.gsub!(/#{r}/m, '{ }')
+    else
+      while source.gsub!(/\{[^\{\}]*\{[^\{\}]*\}[^\{\}]*\}/m, '{ }')
+      end
+    end
+
+    return source
+  end
+
+  # Return the number of pairs of braces/square brackets in the function provided by the user
+  # +source+:: String containing the function to be processed
+  def count_number_of_pairs_of_braces_in_function(source)
+    is_function_start_found = false
+    curr_level = 0
+    total_pairs = 0
+
+    source.each_char do |c|
+      if ("{" == c)
+        curr_level += 1
+        total_pairs  +=1
+        is_function_start_found = true
+      elsif ("}" == c)
+        curr_level -=1
+      end
+
+      break if is_function_start_found && curr_level == 0    # We reached the end of the inline function body
+    end
+
+    if 0 != curr_level
+      total_pairs = 0          # Something is fishy about this source, not enough closing braces?
+    end
+
+    return total_pairs
+  end
+
+  # Transform inline functions to regular functions in the source by the user
+  # +source+:: String containing the source to be processed
+  def transform_inline_functions(source)
+    inline_function_regex_formats = []
+    square_bracket_pair_regex_format = /\{[^\{\}]*\}/ # Regex to match one whole block enclosed by two square brackets
+
+    # Convert user provided string patterns to regex
+    @inline_function_patterns.each do |user_format_string|
+      user_regex = Regexp.new(user_format_string)
+      cleanup_spaces_after_user_regex = /\s*/
+      inline_function_regex_formats << Regexp.new(user_regex.source + cleanup_spaces_after_user_regex.source)
+    end
+
+    # let's clean up the encoding in case they've done anything weird with the characters we might find
+    source = source.force_encoding("ISO-8859-1").encode("utf-8", :replace => nil)
+
+    # - Just looking for static|inline in the gsub is a bit too aggressive (functions that are named like this, ...), so we try to be a bit smarter
+    #   Instead, look for "static inline" and parse it:
+    #   - Everything before the match should just be copied, we don't want
+    #     to touch anything but the inline functions.
+    #   - Remove the implementation of the inline function (this is enclosed
+    #     in square brackets) and replace it with ";" to complete the
+    #     transformation to normal/non-inline function.
+    #     To ensure proper removal of the function body, we count the number of square-bracket pairs
+    #     and remove the pairs one-by-one.
+    #   - Copy everything after the inline function implementation and start the parsing of the next inline function
+
+    inline_function_regex_formats.each do |format|
+      loop do
+        inline_function_match = source.match(/#{format}/) # Search for inline function declaration
+        break if nil == inline_function_match             # No inline functions so nothing to do
+
+        total_pairs_to_remove = count_number_of_pairs_of_braces_in_function(inline_function_match.post_match)
+
+        break if 0 == total_pairs_to_remove # Bad source?
+
+        inline_function_stripped = inline_function_match.post_match
+
+        total_pairs_to_remove.times do
+          inline_function_stripped.sub!(/\s*#{square_bracket_pair_regex_format}/, ";") # Remove inline implementation (+ some whitespace because it's prettier)
+        end
+
+        source = inline_function_match.pre_match + inline_function_stripped # Make new source with the inline function removed and move on to the next
+      end
+    end
+
+    return source
+  end
 
   def import_source(source)
 
@@ -54,18 +157,26 @@ class CMockHeaderParser
     # void must be void for cmock _ExpectAndReturn calls to process properly, not some weird typedef which equates to void
     # to a certain extent, this action assumes we're chewing on pre-processed header files, otherwise we'll most likely just get stuff from @treat_as_void
     @local_as_void = @treat_as_void
-    void_types = source.scan(/typedef\s+(?:\(\s*)?void(?:\s*\))?\s+([\w\d]+)\s*;/)
+    void_types = source.scan(/typedef\s+(?:\(\s*)?void(?:\s*\))?\s+([\w]+)\s*;/)
     if void_types
       @local_as_void += void_types.flatten.uniq.compact
+    end
+
+    # If user wants to mock inline functions,
+    # remove the (user specific) inline keywords before removing anything else to avoid missing an inline function
+    if (@treat_inlines == :include)
+      @inline_function_patterns.each { |user_format_string|
+        source.gsub!(/#{user_format_string}/, '') # remove user defined inline function patterns
+      }
     end
 
     # smush multiline macros into single line (checking for continuation character at end of line '\')
     source.gsub!(/\s*\\\s*/m, ' ')
 
     #remove comments (block and line, in three steps to ensure correct precedence)
-    source.gsub!(/\/\/(?:.+\/\*|\*(?:$|[^\/])).*$/, '')  # remove line comments that comment out the start of blocks
-    source.gsub!(/\/\*.*?\*\//m, '')                     # remove block comments
-    source.gsub!(/\/\/.*$/, '')                          # remove line comments (all that remain)
+    source.gsub!(/(?<!\*)\/\/(?:.+\/\*|\*(?:$|[^\/])).*$/, '')  # remove line comments that comment out the start of blocks
+    source.gsub!(/\/\*.*?\*\//m, '')                            # remove block comments
+    source.gsub!(/\/\/.*$/, '')                                 # remove line comments (all that remain)
 
     # remove assembler pragma sections
     source.gsub!(/^\s*#\s*pragma\s+asm\s+.*?#\s*pragma\s+endasm/m, '')
@@ -87,6 +198,9 @@ class CMockHeaderParser
     source.gsub!(/\)(\w)/, ') \1')                                                         # add space between parenthese and alphanumeric
     source.gsub!(/(^|\W+)(?:#{@c_strippables.join('|')})(?=$|\W+)/,'\1') unless @c_strippables.empty? # remove known attributes slated to be stripped
 
+    #scan standalone function pointers and remove them, because they can just be ignored
+    source.gsub!(/\w+\s*\(\s*\*\s*\w+\s*\)\s*\([^)]*\)\s*;/,';')
+
     #scan for functions which return function pointers, because they are a pain
     source.gsub!(/([\w\s\*]+)\(*\(\s*\*([\w\s\*]+)\s*\(([\w\s\*,]*)\)\)\s*\(([\w\s\*,]*)\)\)*/) do |m|
       functype = "cmock_#{@module_name}_func_ptr#{@typedefs.size + 1}"
@@ -94,15 +208,14 @@ class CMockHeaderParser
       "#{functype} #{$2.strip}(#{$3});"
     end
 
-    # remove nested pairs of braces because no function declarations will be inside of them (leave outer pair for function definition detection)
-    if (RUBY_VERSION.split('.')[0].to_i > 1)
-      #we assign a string first because (no joke) if Ruby 1.9.3 sees this line as a regex, it will crash.
-      r = "\\{([^\\{\\}]*|\\g<0>)*\\}"
-      source.gsub!(/#{r}/m, '{ }')
-    else
-      while source.gsub!(/\{[^\{\}]*\{[^\{\}]*\}[^\{\}]*\}/m, '{ }')
-      end
+    source = remove_nested_pairs_of_braces(source)
+
+    if (@treat_inlines == :include)
+      # Functions having "{ }" at this point are/were inline functions,
+      # User wants them in so 'disguise' them as normal functions with the ";"
+      source.gsub!("{ }", ";")
     end
+
 
     # remove function definitions by stripping off the arguments right now
     source.gsub!(/\([^\)]*\)\s*\{[^\}]*\}/m, ";")
@@ -118,11 +231,15 @@ class CMockHeaderParser
     src_lines = source.split(/\s*;\s*/).uniq
     src_lines.delete_if {|line| line.strip.length == 0}                            # remove blank lines
     src_lines.delete_if {|line| !(line =~ /[\w\s\*]+\(+\s*\*[\*\s]*[\w\s]+(?:\[[\w\s]*\]\s*)+\)+\s*\((?:[\w\s\*]*,?)*\s*\)/).nil?}     #remove function pointer arrays
-    if (@treat_externs == :include)
-      src_lines.delete_if {|line| !(line =~ /(?:^|\s+)(?:inline)\s+/).nil?}        # remove inline functions
-    else
-      src_lines.delete_if {|line| !(line =~ /(?:^|\s+)(?:extern|inline)\s+/).nil?} # remove inline and extern functions
+
+    unless (@treat_externs == :include)
+      src_lines.delete_if {|line| !(line =~ /(?:^|\s+)(?:extern)\s+/).nil?} # remove extern functions
     end
+
+    unless (@treat_inlines == :include)
+      src_lines.delete_if {|line| !(line =~ /(?:^|\s+)(?:inline)\s+/).nil?} # remove inline functions
+    end
+
     src_lines.delete_if {|line| line.empty? } #drop empty lines
   end
 
@@ -184,8 +301,29 @@ class CMockHeaderParser
       arg_info = parse_type_and_name(arg)
       arg_info.delete(:modifier)             # don't care about this
       arg_info.delete(:c_calling_convention) # don't care about this
+
+      # in C, array arguments implicitly degrade to pointers
+      # make the translation explicit here to simplify later logic
+      if @treat_as_array[arg_info[:type]] and not arg_info[:ptr?] then
+        arg_info[:type] = "#{@treat_as_array[arg_info[:type]]}*"
+        arg_info[:type] = "const #{arg_info[:type]}" if arg_info[:const?]
+        arg_info[:ptr?] = true
+      end
+
       args << arg_info
     end
+
+    # Try to find array pair in parameters following this pattern : <type> * <name>, <@array_size_type> <@array_size_name>
+    args.each_with_index {|val, index|
+      next_index = index + 1
+      if (args.length > next_index)
+        if (val[:ptr?] == true and args[next_index][:name].match(@array_size_name) and @array_size_type.include?(args[next_index][:type]))
+          val[:array_data?] = true
+          args[next_index][:array_size?] = true
+        end
+      end
+    }
+
     return args
   end
 
@@ -220,7 +358,7 @@ class CMockHeaderParser
       return 'void'
     else
       c=0
-      arg_list.gsub!(/(\w+)(?:\s*\[\s*\(*[\s\d\w+-]*\)*\s*\])+/,'*\1')  # magically turn brackets into asterisks, also match for parentheses that come from macros
+      arg_list.gsub!(/(\w+)(?:\s*\[\s*\(*[\s\w+-]*\)*\s*\])+/,'*\1')  # magically turn brackets into asterisks, also match for parentheses that come from macros
       arg_list.gsub!(/\s+\*/,'*')                                       # remove space to place asterisks with type (where they belong)
       arg_list.gsub!(/\*(\w)/,'* \1')                                   # pull asterisks away from arg to place asterisks with type (where they belong)
 
