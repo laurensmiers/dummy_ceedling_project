@@ -55,6 +55,7 @@
     - :callback
   :treat_inlines: :include
   :inline_function_patterns:
+    - 'MY_LIBRARY_INLINE'
     - 'static inline'
     - 'static __inline__ __attribute__ \(\(always_inline\)\)'
     - 'static __inline__'

@@ -1,6 +1,8 @@
 #ifndef EXAMPLE_H_
 #define EXAMPLE_H_
 
+#define MY_LIBRARY_INLINE static __inline__ __attribute__ ((always_inline))
+
 #ifndef UNITTEST
 
 static __inline__ __attribute__ ((always_inline)) uint16_t inline_func_0 (uint32_t a);
@@ -23,6 +25,10 @@ static __inline__ __attribute__ ((always_inline)) uint16_t inline_func_16 (uint3
 
 #endif
 
+MY_LIBRARY_INLINE uint16_t inline_func_with_define (uint32_t a)
+{
+    return (uint16_t) a;
+}
 
 static __inline__ uint16_t inline_func_0 (uint32_t a)
 {
