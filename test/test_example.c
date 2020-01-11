@@ -13,6 +13,9 @@ void tearDown(void)
 
 void test_example(void)
 {
+	inline_func_library_ExpectAndReturn(1, 1);
+	TEST_ASSERT_EQUAL(1, inline_func_library(1));
+
 	alwaysinline_func_0_ExpectAndReturn(1, 1);
 	TEST_ASSERT_EQUAL(1, alwaysinline_func_0(1));
 

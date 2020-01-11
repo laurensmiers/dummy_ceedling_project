@@ -3,6 +3,14 @@
 
 #define MY_LIBRARY_INLINE static __inline__ __attribute__ ((always_inline))
 
+#if defined (FORCE_INLINE)
+/* force function inline */
+#define MY_LIBRARY_INLINE static __inline__ __attribute__ ((always_inline))
+#else
+/* Use call-able implementation */
+#define MY_LIBRARY_INLINE
+#endif
+
 #ifndef UNITTEST
 
 static __inline__ __attribute__ ((always_inline)) uint16_t inline_func_0 (uint32_t a);
@@ -25,10 +33,14 @@ static __inline__ __attribute__ ((always_inline)) uint16_t inline_func_16 (uint3
 
 #endif
 
-MY_LIBRARY_INLINE uint16_t inline_func_with_define (uint32_t a)
+#ifdef FORCE_INLINE
+MY_LIBRARY_INLINE uint16_t inline_func_library (uint32_t a)
 {
     return (uint16_t) a;
 }
+#else
+uint16_t inline_func_library (uint32_t a);
+#endif
 
 static __inline__ uint16_t inline_func_0 (uint32_t a)
 {
@@ -201,4 +213,3 @@ static __inline__ __attribute__ ((always_inline)) uint16_t alwaysinline_func_16 
 }
 
 #endif /* EXAMPLE_H_ */
-
